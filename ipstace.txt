@@ -1,5 +1,5 @@
 x.x.x.x/x,x.x.x.x/x
-x.x.x.x/x
+x.x.x.x:x
 
 #line 1 is AllowedIPs data
 #line 2 is Endpoint data
