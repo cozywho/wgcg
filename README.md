@@ -1,10 +1,6 @@
-wgcg.sh script is reliant on Wireguard being configured & installed.
+wgcg.sh is a server side client generator & is reliant on Wireguard being installed & configured.
 
-You can utilize wgsg (Wireguard Server Generator) to build out your server side.
-
-wgcg.sh & ipspace.txt need to be in the same folder.
-
-Modify the ipspace.txt file for your environment, keep same formatting.
+You can utilize wgsg (Wireguard Server Generator) to build out your server side (WIP).
 
 Command should look like "sudo wgcg username1 username2 .... usernameN".
 
