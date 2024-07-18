@@ -6,6 +6,6 @@ Command should look like "sudo wgcg username1 username2 .... usernameN".
 
 Example: sudo wgcg cozywho
 
-Output will generate a correctly formatted client cert named cozywho.conf
+Output will generate a correctly formatted client cert named cozywho.conf in the /etc/wireguard/certs folder.
 
 --- need to fix the install portion and correctly place ipspace.txt file.
