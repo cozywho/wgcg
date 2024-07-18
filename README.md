@@ -7,3 +7,5 @@ Command should look like "sudo wgcg username1 username2 .... usernameN".
 Example: sudo wgcg cozywho
 
 Output will generate a correctly formatted client cert named cozywho.conf
+
+--- need to fix the install portion and correctly place ipspace.txt file.
