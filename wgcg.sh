@@ -13,13 +13,13 @@ if [ $# -eq 0 ]; then
 fi
 
 # Check for ipspace.txt and read values
-if [ ! -f "ipspace.txt" ]; then
-    echo "ipspace.txt not found"
+if [ ! -f "/etc/wireguard/ipspace.txt" ]; then
+    echo "/etc/wireguard/ipspace.txt not found"
     exit 1
 fi
 
-allowed_ips=$(sed -n '1p' ipspace.txt)
-endpoint=$(sed -n '2p' ipspace.txt)
+allowed_ips=$(sed -n '1p' /etc/wireguard/ipspace.txt)
+endpoint=$(sed -n '2p' /etc/wireguard/ipspace.txt)
 
 # Find the subnet details from wg0.conf
 subnet=$(sed -n '2p' /etc/wireguard/wg0.conf | awk '{print $3}')
