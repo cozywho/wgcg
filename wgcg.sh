@@ -8,7 +8,7 @@ fi
 
 if [ $# -eq 0 ]; then
     echo "No arguments provided"
-    echo "Usage: wgcg username1 [username2 ... usernameN]"
+    echo "Usage: wgcg username1 [username2 ... usernameN] or wgcg usernameStart-usernameEnd"
     exit 1
 fi
 
@@ -30,8 +30,37 @@ subnet_mask=$(echo $subnet | cut -d/ -f2)
 IFS=. read -r i1 i2 i3 i4 <<< "$subnet_ip"
 ip_range=($(seq 1 254))
 
+# Function to generate range of usernames
+generate_usernames() {
+    local start=$1
+    local end=$2
+    local prefix=${start%[0-9]*}
+    local start_num=${start##*[!0-9]}
+    local end_num=${end##*[!0-9]}
+
+    # Determine the number of digits in the suffix
+    local num_digits=${#start_num}
+    local end_num_padded=$(printf "%0${num_digits}d" $end_num)
+
+    for ((i=start_num; i<=end_num_padded; i++)); do
+        printf "%s%0${num_digits}d\n" "$prefix" "$i"
+    done
+}
+
+# Parse arguments and generate usernames if range is specified
+usernames=()
+for arg in "$@"; do
+    if [[ $arg =~ ^([A-Za-z]+[0-9]+)-([A-Za-z]+[0-9]+)$ ]]; then
+        start=${BASH_REMATCH[1]}
+        end=${BASH_REMATCH[2]}
+        usernames+=($(generate_usernames $start $end))
+    else
+        usernames+=("$arg")
+    fi
+done
+
 # Loop through each provided username
-for username in "$@"; do
+for username in "${usernames[@]}"; do
 
     # Check for duplicate username in /etc/wireguard/wg0.conf
     if grep -A 1 "\[Peer\]" /etc/wireguard/wg0.conf | grep -q "#$username"; then
@@ -42,6 +71,10 @@ for username in "$@"; do
     # Find an unused IP in the subnet
     unused_ip=""
     for ip in "${ip_range[@]}"; do
+        # Skip the .1 address as it is reserved for wg0 interface
+        if [ "$ip" -eq 1 ]; then
+            continue
+        fi
         if ! grep -q "$i1.$i2.$i3.$ip/32" /etc/wireguard/wg0.conf; then
             unused_ip="$i1.$i2.$i3.$ip"
             break
