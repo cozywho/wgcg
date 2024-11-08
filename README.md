@@ -12,4 +12,4 @@ Output will generate a correctly formatted client cert named cozywho.conf in the
 
 --- need to make a copy of the *.conf files and put them in user/Documents/ mkdir wg-certs or sumthin
 
---- add a revocation funtion. "wgcg --remove user". should probably do a wgcg --add user insteag of just wgcg certname.
+--- add a revocation funtion. "wgcg --remove user". should probably do a wgcg --add user instead of just wgcg certname if i do this
