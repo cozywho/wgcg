@@ -94,16 +94,19 @@ for username in "${usernames[@]}"; do
     # Generate keys and store them
     wg genkey > /etc/wireguard/clients/$username.key
     wg pubkey < /etc/wireguard/clients/$username.key > /etc/wireguard/clients/$username.pub
-
+    wg genpsk > /etc/wireguard/clients/$username.psk
+    
     private_key=$(cat /etc/wireguard/clients/$username.key)
     public_key=$(cat /etc/wireguard/clients/$username.pub)
-
+    preshared_key=$(cat /etc/wireguard/clients/$username.psk)
+    
     # Append new peer to wg0.conf
     {
         echo ""
         echo "[Peer]"
         echo "#$username"
         echo "PublicKey = $public_key"
+        echo "PresharedKey = $preshared_key"
         echo "AllowedIPs = $client_ip/32"
     } >> /etc/wireguard/wg0.conf
 
@@ -117,10 +120,10 @@ for username in "${usernames[@]}"; do
         echo "[Interface]"
         echo "PrivateKey = $private_key"
         echo "Address = $client_ip/32"
-        echo "ListenPort = 51820"
         echo ""
         echo "[Peer]"
         echo "PublicKey = $(cat /etc/wireguard/server.pub)"
+        echo "PresharedKey = $preshared_key"
         echo "AllowedIPs = $allowed_ips"
         echo "Endpoint = $endpoint"
         echo "PersistentKeepalive = 21"
