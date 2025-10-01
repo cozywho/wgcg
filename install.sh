@@ -7,10 +7,10 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # Move the wgcg script to /usr/local/bin/
-cp wgcg.sh /usr/local/bin/wgcg
+cp wgcg.sh /usr/bin/wgcg
 
 # Make the script executable
-chmod +x /usr/local/bin/wgcg
+chmod +x /usr/bin/wgcg
 
 # # Check if ipspace.txt exists and move it to /etc/wireguard/
 if [ -f "ipspace.txt" ]; then
