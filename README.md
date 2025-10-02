@@ -1,6 +1,6 @@
 
 --------------------  
-wgcg is a server side client generator that will install and configure wireguard on interface name wg0. 
+wgcg is a server side client generator that will install and configure wireguard on interface name wg0.  
 Assumed NIC is ens18, edit the install.sh to your liking before you run it.  
 The PostUp and PostDown stuff are your firewall rules, just replicate based on your env.
 
